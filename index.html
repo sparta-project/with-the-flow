@@ -1,12 +1,506 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>With The Flow</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <style>
+        body {
+            padding: 0;
+        }
+
+        .start-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            z-index: 20;
+            transition: .3s ease-out;
+
+            >div {
+                width: 120px;
+                color: #7485F7;
+            }
+        }
+
+        #toggleButton {
+            background-color: transparent;
+            color: #7485F7;
+            font-size: 60px;
+            font-weight: 800;
+            border: none;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        .toggleShadow {
+            position: absolute;
+            margin-top: 20px;
+            width: 100px;
+            height: 0px;
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 50%;
+            box-shadow: 15px -35px 20px 15px gray;
+            border: 1px solid rgba(149, 149, 149, 0);
+            z-index: -10;
+        }
+
+        #gg {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px;
+            background-image: url('https://cdn.discordapp.com/attachments/1187229449968697348/1187710157883441153/2.png?ex=6597e048&is=65856b48&hm=4674c1c163352e3f2dba9bf6752319840b940982bf1a43d7fb926a2070b41a6f&');
+            background-size: cover;
+        }
+
+        button {
+            background-color: transparent;
+            font-size: 40px;
+            border: none;
+            outline: none;
+        }
+
+        #ti {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .b {
+            background-color: rgb(230, 254, 255, 0.55);
+            margin-top: 60px;
+            padding: 80px;
+            width: 80%;
+            height: 80%;
+        }
+
+        #WW {
+            font-size: 37px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .explanationLine{
+            --b: 5px;
+            /* thickness of the border */
+            --c: #390cb8;
+            /* color of the border */
+            --w: 33px;
+            /* width of border */
+
+            border: var(--b) solid #0000;
+            /* space for the border */
+            --_g: #0000 90deg, var(--c) 0;
+            --_p: var(--w) var(--w) border-box no-repeat;
+            background:
+                conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 / var(--_p),
+                conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) 100% 0 / var(--_p),
+                conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--_g)) 0 100% / var(--_p),
+                conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
+        }
+
+        .explanationOuter {
+            text-align: left;
+            font-size: 24px;
+            margin: 20px auto;
+            padding: 7px;
+        }
+
+        .explanationInner {
+            --w: 20px;
+            padding: 20px
+        }
+
+        .yi p {
+            margin-bottom: 10px;
+        }
+
+        .yi ul {
+            padding-left: 20px;
+        }
+
+        li {
+            color: #2e4eff;
+        }
+
+        .titleBox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .titleText {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 100px;
+            border: 3px solid #486ade;
+            border-radius: 7px;
+        }
+
+        .teamContainer {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .memberContainer {
+            margin: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .memberCard {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            border: 3px solid #486ade;
+            border-radius: 7px;
+            width: 240px;
+            height: 320px;
+        }
+
+        .memberCard-overlay {
+            position: absolute;
+            width: 240px;
+            height: 320px;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        .name {
+            margin: 5px;
+            padding: 5px;
+            font-size: 18px;
+            text-align: end;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .level {
+            margin: 5px;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .pictureBox {
+            margin: 5px;
+            padding: 5px;
+            height: 170px;
+        }
+
+        .explanation {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .modal {
+            background-color: green;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            max-height: 1200px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .picture {
+            margin-right: 30px;
+            width: 200px;
+        }
+
+        .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .mouse-design {
+            position: fixed;
+            display: none;
+            width: 24px;
+            height: 24px;
+            /* background-color: rgb(220, 219, 219); */
+            border: 1px solid rgb(145, 145, 145);
+            border-radius: 30px;
+            z-index: -10;
+        }
+
+        .mouse-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border: 1px solid rgb(145, 145, 145);
+            border-radius: 30px;
+            background-color: rgb(145, 145, 145);
+        }
+    </style>
 </head>
+
 <body>
-    <script src="./script.js"></script>
+    <div class="mouse-design">
+        <div class="mouse-dot"></div>
+    </div>
+    <div class="main">
+        <div class="start-container">
+            <div>Project</div>
+            <div id="toggleButton">
+                WTF
+                <div class="toggleShadow"></div>
+            </div>
+        </div>
+        <div id="gg">
+            <div id="ti">
+                <img src='https://cdn.discordapp.com/attachments/1187229449968697348/1187742114105278564/Untitled-1.png?ex=6597fe0b&is=6585890b&hm=8ba7e2f339e39a4b1e9c9f74d13aa532c0a089d12428241187f8df45eaad9afd&'>
+            </div>
+            <div class="b">
+                <h1 id="WW">『의.식.의.흐.름』대로 저희 팀을 소개합니다.</h1>
+                <div class="explanationOuter explanationLine">
+                    <div class="explanationInner explanationLine">
+                        <ul>
+                            <li>같지만 서로 겹치지 않는 "I"들</li>
+                            <li>무의식이지만 의외로 체계적인 협업 스타일</li>
+                            <li>설명3</li>
+                            <li>설명4</li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="titleBox">
+                    <div class="titleText">팀원 구성</div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="teamContainer">
+                    <div class="memberContainer">
+                        <div class="memberCard mem1">
+                            <div class="pictureBox">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div class="explanation">어제의 나보다 나은 내일이 되자</div>
+                            <div class="name">김민건</div>
+                            <div class="memberCard-overlay"></div>
+                        </div>
+                        <!-- </div>
+        <div class="memberContainer"> -->
+                        <div class="memberCard mem2">
+                            <div class="pictureBox">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div class="explanation">열심히 하겠슴다</div>
+                            <div class="name">조민근</div>
+                            <div class="memberCard-overlay"></div>
+                        </div>
+                    </div>
+                    <div class="memberContainer">
+                        <div class="memberCard mem3">
+                            <div class="pictureBox">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div class="explanation">살아남을게요!</div>
+                            <div class="name">송인호</div>
+                            <div class="memberCard-overlay"></div>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class="memberContainer"> -->
+                        <div class="memberCard mem4">
+                            <div class="pictureBox">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div class="explanation">많이 배워가고 싶습니다</div>
+                            <div class="name">류기돈</div>
+                            <div class="memberCard-overlay"></div>
+                        </div>
+                    </div>
+                    <div id="myModal1" class="modal">
+                        <div class="modal-content">
+                            <span class="close closeModalBtn">&times;</span>
+                            <div class="picture">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div>
+                                <p>-이름 : 김민건</p>
+                                <p>
+                                    -팀원설명 : 타인의 신경을 많이 쓴다, 긴장을 많이 한다. 팀원 모두의 의견을 받으려 한다
+                                </p>
+                                <p>-팀원소개 및 스타일</p>
+                                <p>-팀원 블로그 : https://blog.naver.com/mnbqwe123987</p>
+                                <p>-팀원 깃허브 주소</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModal2" class="modal">
+                        <div class="modal-content">
+                            <span class="close closeModalBtn">&times;</span>
+                            <div class="picture">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div>
+                                <p>-이름 : 조민근</p>
+                                <p>-팀원설명 : 축구를 매우 좋아합니다.</p>
+                                <p>-팀원소개 및 스타일</p>
+                                <p>-팀원 블로그 : https://blog.naver.com/mgeun97</p>
+                                <p>-팀원 깃허브 주소 : https://github.com/alsgeun/sparta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModal3" class="modal">
+                        <div class="modal-content">
+                            <span class="close closeModalBtn">&times;</span>
+                            <div class="picture">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div>
+                                <p>-이름 : 송인호</p>
+                                <p>-팀원설명 : 아 옆으로 스크롤하면 새로칸이나온다는것을 지금 알았어요</p>
+                                <p>-팀원소개 및 스타일</p>
+                                <p>-팀원 블로그 : https://night-of-destruction.tistory.com/</p>
+                                <p>-팀원 깃허브 주소 : https://github.com/fhem348/sparta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myModal4" class="modal">
+                        <div class="modal-content">
+                            <span class="close closeModalBtn">&times;</span>
+                            <div class="picture">
+                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            </div>
+                            <div>
+                                <p>-이름 : 류기돈</p>
+                                <p>
+                                    -팀원설명 : 경기도 살고 있습니다. 음악 듣기 좋아합니다. 스케이트 보드 배우고 있습니다.
+                                </p>
+                                <p>-팀원소개 및 스타일</p>
+                                <p>-팀원 블로그 : https://blog.naver.com/lyukidon</p>
+                                <p>-팀원 깃허브 주소 : https://github.com/lyukid0n/sparta</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            $("#toggleButton").click(function(event) {
+                console.log('click')
+                const location = document.querySelector('#toggleButton').offsetTop;
+                const destination = document.querySelector("#gg").offsetTop;
+                window.scrollTo({
+                    top: destination,
+                    behavior: 'smooth'
+                })
+            });
+
+            $("html").on("mousemove", (evt) => {
+                let x = evt.clientX;
+                let y = evt.clientY;
+
+                $(".mouse-design").css("display", "block");
+                $(".mouse-design").css("top", y - 12);
+                $(".mouse-design").css("left", x - 12);
+
+                $(".mouse-dot").css("display", "block");
+                $(".mouse-dot").css("top", y - 4);
+                $(".mouse-dot").css("left", x - 4);
+
+                // 색깔
+            });
+            $("html").on("mouseout", (evt) => {
+                $(".mouse-design").css("display", "none");
+                $(".mouse-dot").css("display", "none");
+            })
+
+            // $(() => {
+            //   $("#toggleButton").click(function () {
+            //     $(".start-container").css("display", "none");
+            //     $("#gg").css("display", "block");
+            //   });
+            // });
+
+            const memberCard = document.querySelectorAll(".memberCard");
+
+            const clickFunc = (myModal) => {
+                var modal = document.querySelector(`#${myModal}`); // modal 변수를 앞으로 이동
+
+                $(".closeModalBtn").click(() => (modal.style.display = "none"));
+
+                modal.style.display = "block";
+
+                window.addEventListener("click", function(event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            };
+
+            $(".mem1").click(() => {
+                clickFunc("myModal1");
+            });
+            $(".mem2").click(() => {
+                clickFunc("myModal2");
+            });
+            $(".mem3").click(() => {
+                clickFunc("myModal3");
+            });
+            $(".mem4").click(() => {
+                clickFunc("myModal4");
+            });
+
+            const memberCards = document.querySelectorAll(".memberCard");
+            memberCards.forEach((card) => {
+                card.addEventListener("mousemove", (evt) => {
+                    let x = evt.offsetX;
+                    let y = evt.offsetY;
+                    let rotateY = (-1 / 12) * x + 10;
+                    let rotateX = (1 / 18) * y - 10;
+                    card.style = `transform : perspective(320px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                });
+                card.addEventListener("mouseout", (evt) => {
+                    card.style = `transform : rotateY(0deg) rotateX(0deg)`;
+                });
+            });
+        </script>
 </body>
+
 </html>
