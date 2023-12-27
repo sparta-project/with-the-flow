@@ -405,6 +405,24 @@
             flex-direction: column;
             margin-top: 5px;
         }
+        .inputContainer{
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .review{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        .review-content{
+            display: flex;
+            flex-direction: row;
+            padding: 10px 20px;
+            background-color: #dfdfdf;
+        }
     </style>
 </head>
 
@@ -615,13 +633,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="inputContainer">
+                    <form class="inputContainer">
+                        <span>코멘트 작성하기!</span>
                         <input class="reviewInput" type="text">
                         <button class="reviewBtn" type="submit">전송</button>
-                    </div>
+                    </form>
                     <div class="review">
                     </div>
-                    <div id="disqus_thread"></div>
+                    <!-- <div id="disqus_thread"></div> -->
                 </div>
             </div>
 
@@ -750,7 +769,12 @@
                 const inputValue = document.querySelector(".reviewInput").value;
                 const reviewContainer = document.querySelector('.review');
                 const reviewContents = reviewContainer.innerHTML;
-                reviewContainer.innerHTML = `${reviewContents}<div><div>${content}<div><button name=${key} class="deleteBtn">삭제</button></div>`;
+                reviewContainer.innerHTML = `
+                    ${reviewContents}
+                    <div class="review-content">
+                        <div>${content}</div>
+                        <button name=${key} class="deleteBtn">삭제</button>
+                    </div>`;
                 input.value = ""
 
                 addEventListener_after_loaded()
@@ -812,6 +836,10 @@
                 await writeDB();
                 await updateData();
                 await renderData(localData);
+            })
+
+            document.querySelector('form').addEventListener('submit', (e) => {
+                e.preventDefault()
             })
         </script>
 </body>
