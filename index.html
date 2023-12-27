@@ -61,13 +61,6 @@
             background-size: cover;
         }
 
-        button {
-            background-color: transparent;
-            font-size: 40px;
-            border: none;
-            outline: none;
-        }
-
         #ti {
             display: flex;
             justify-content: center;
@@ -726,7 +719,7 @@
             });
             
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
-            import { getDatabase, ref, set, onValue, child, get } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'
+            import { getDatabase, ref, set, onValue, child, get, remove } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'
 
             // Your web app's Firebase configuration
             const firebaseConfig = {
@@ -744,23 +737,23 @@
 
             let localData = {}
 
-            function handleSubmit(){
-                const input = document.querySelector(".reviewInput");
-                const inputValue = document.querySelector(".reviewInput").value;
-                const reviewContainer = document.querySelector('.review');
-                const reviewContents = reviewContainer.innerHTML;
-                reviewContainer.innerHTML = `${reviewContents}<div>${inputValue}</div>`
-                input.value = ""
+            function addEventListener_after_loaded(){
+                document.querySelectorAll(".deleteBtn").forEach(btn => btn.addEventListener('click', async (evt) => {
+                    await removeDB(evt);
+                    await updateData();
+                    await renderData(localData);
+                }))
             }
 
-            function renderContent (content) {
-                console.log(content)
+            function renderContent (key, content) {
                 const input = document.querySelector(".reviewInput");
                 const inputValue = document.querySelector(".reviewInput").value;
                 const reviewContainer = document.querySelector('.review');
                 const reviewContents = reviewContainer.innerHTML;
-                reviewContainer.innerHTML = `${reviewContents}<div>${content}</div>`;
+                reviewContainer.innerHTML = `${reviewContents}<div><div>${content}<div><button name=${key} class="deleteBtn">삭제</button></div>`;
                 input.value = ""
+
+                addEventListener_after_loaded()
             }
 
             function renderData (object) {
@@ -768,7 +761,7 @@
                 const keys = Object.keys(object);
                 keys.forEach(key => {
                     const contentData = object[key]
-                    renderContent(contentData.content)
+                    renderContent(key, contentData.content)
                 })
             }
 
@@ -803,7 +796,18 @@
                 }
             }
 
-            
+            async function removeDB (evt) {
+                const {name} = evt.target
+                // console.log(name)
+                try{
+                    const db = await getDatabase(app);
+                    const reviewRef = await ref(db, name);
+                    console.log(reviewRef)
+                    await remove(reviewRef);                
+                }catch(err){
+                    console.error(err)
+                }
+            }
 
             document.querySelector(".reviewBtn").addEventListener("click",async () => {
                 await writeDB();
