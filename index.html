@@ -759,10 +759,12 @@
             function renderData (object) {
                 document.querySelector('.review').innerHTML = "";
                 const keys = Object.keys(object);
-                keys.forEach(key => {
-                    const contentData = object[key]
-                    renderContent(key, contentData.content)
-                })
+                if (keys) {
+                    keys.forEach(key => {
+                        const contentData = object[key]
+                        renderContent(key, contentData.content)
+                    })
+                }
             }
 
             async function updateData () {
@@ -771,14 +773,12 @@
                 await get(reviewRef).then((snapshot) => {
                     if (snapshot.exists()) {
                         localData = snapshot.val();
+                        console.log('updateData', snapshot.val())
+                    }else{
+                        localData = {}
                     }
                 }).catch((err) => console.error(err))
             }
-
-            document.addEventListener("DOMContentLoaded", async () => {
-                await updateData();
-                await renderData(localData)
-            });
 
             async function writeDB () {
                 const input = document.querySelector('.reviewInput')
@@ -798,18 +798,17 @@
 
             async function removeDB (evt) {
                 const {name} = evt.target
-                // console.log(name)
-                try{
-                    const db = await getDatabase(app);
-                    const reviewRef = await ref(db, name);
-                    console.log(reviewRef)
-                    await remove(reviewRef);                
-                }catch(err){
-                    console.error(err)
-                }
+                const db = await getDatabase(app);
+                const reviewRef = await ref(db, name);
+                await remove(reviewRef);      
             }
 
-            document.querySelector(".reviewBtn").addEventListener("click",async () => {
+            document.addEventListener("DOMContentLoaded", async () => {
+                await updateData();
+                await renderData(localData)
+            });
+
+            document.querySelector(".reviewBtn").addEventListener("click", async () => {
                 await writeDB();
                 await updateData();
                 await renderData(localData);
