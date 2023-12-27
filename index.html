@@ -627,7 +627,6 @@
                         <button class="reviewBtn" type="submit">전송</button>
                     </div>
                     <div class="review">
-                        <div></div>
                     </div>
                     <div id="disqus_thread"></div>
                 </div>
@@ -727,7 +726,7 @@
             });
             
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
-            import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'
+            import { getDatabase, ref, set, onValue, child, get } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'
 
             // Your web app's Firebase configuration
             const firebaseConfig = {
@@ -743,6 +742,8 @@
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
 
+            let localData = {}
+
             function handleSubmit(){
                 const input = document.querySelector(".reviewInput");
                 const inputValue = document.querySelector(".reviewInput").value;
@@ -752,21 +753,39 @@
                 input.value = ""
             }
 
-            function renderReview (array) {
-                
+            function renderContent (content) {
+                console.log(content)
+                const input = document.querySelector(".reviewInput");
+                const inputValue = document.querySelector(".reviewInput").value;
+                const reviewContainer = document.querySelector('.review');
+                const reviewContents = reviewContainer.innerHTML;
+                reviewContainer.innerHTML = `${reviewContents}<div>${content}</div>`;
+                input.value = ""
             }
 
-            // document.addEventListener("DOMContentLoaded", (event) => {
-            //     const db = getDatabase(app);
-            //     const reviewRef = ref(db, "review");
-            //     console.log(reviewRef)
+            function renderData (object) {
+                document.querySelector('.review').innerHTML = "";
+                const keys = Object.keys(object);
+                keys.forEach(key => {
+                    const contentData = object[key]
+                    renderContent(contentData.content)
+                })
+            }
 
-            //     onValue(reviewRef, (snapshot) => {
-            //         const data = snapshot.val();
-            //         console.log(data)
-            //     });
-            //     renderReview()
-            // });
+            async function updateData () {
+                const db = await getDatabase(app);
+                const reviewRef = await ref(db);
+                await get(reviewRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        localData = snapshot.val();
+                    }
+                }).catch((err) => console.error(err))
+            }
+
+            document.addEventListener("DOMContentLoaded", async () => {
+                await updateData();
+                await renderData(localData)
+            });
 
             async function writeDB () {
                 const input = document.querySelector('.reviewInput')
@@ -775,12 +794,10 @@
                     const db = await getDatabase(app);
                     const date =await new Date();
                     const second =await date.getTime();
-                    console.log(second)
                     await set(ref(db, `${second}`), {
                         content: inputValue
                     });
-    
-                    input.value = ""
+                    input.value = "";
                 } else {
                     alert("내용을 입력하세요")
                 }
@@ -788,8 +805,10 @@
 
             
 
-            document.querySelector(".reviewBtn").addEventListener("click",() => {
-                writeDB()
+            document.querySelector(".reviewBtn").addEventListener("click",async () => {
+                await writeDB();
+                await updateData();
+                await renderData(localData);
             })
         </script>
 </body>
