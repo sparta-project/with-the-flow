@@ -8,8 +8,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <style>
+        @import url('https://webfontworld.github.io/cookierun/CookieRun.css');
         body {
             padding: 0;
+            font-family: cookierun;
         }
 
         .start-container {
@@ -128,6 +130,8 @@
         }
 
         li {
+            margin-bottom: 15px;
+            list-style-type: square;
             color: #2e4eff;
         }
 
@@ -161,51 +165,139 @@
         }
 
         .memberCard {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            border: 3px solid #486ade;
+            display: grid;
+            grid-template-columns: 150px 2fr;
+            grid-template-rows:  1fr 1fr;
+            grid-template-areas: 'image name_role'
+                                 'exp   exp';
+            gap: 15px;
+            border: 3px solid #000000;
             border-radius: 7px;
-            width: 240px;
-            height: 320px;
+            width: 430px;
+            height: 250px;
+            background-color: #565656;
+            padding: 10px;
+        }
+
+        .card-option{
+            padding: 10px;
+            border-radius: 7px;
+            background-color: #a0a0a0;
+            box-shadow:3px 3px 3px #323232;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
         }
 
         .memberCard-overlay {
             position: absolute;
-            width: 240px;
-            height: 320px;
-            border-radius: 12px;
+            width: 430px;
+            height: 250px;
+            border-radius: 7px;
             z-index: 10;
         }
 
-        .name {
-            margin: 5px;
+        .role {
+            grid-area: role;
             padding: 5px;
-            font-size: 18px;
-            text-align: end;
-            font-size: 22px;
-            font-weight: 800;
+            font-size: 30px;
         }
 
-        .level {
-            margin: 5px;
+        .name {
+            grid-area: name;
             padding: 5px;
-            font-size: 18px;
+            font-size: 43px;
+            font-weight: 800;
+            text-align: center;
+            -webkit-text-stroke: 2px black;
+            text-shadow: 0px 0px 15px rgb(86, 86, 86)
         }
 
         .pictureBox {
-            margin: 5px;
-            padding: 5px;
-            height: 170px;
+            grid-area: image;
+            background-color: #9ea0a8;
         }
 
         .explanation {
-            margin: 5px;
-            padding: 5px;
+            grid-area: exp;
+            font-size: 24px;
+            text-align: center;
         }
 
-        body {
-            font-family: Arial, sans-serif;
+        .mem1:hover {
+            background-color: #6e3a73;
+            > .card-option{
+                background-color: #af86b4;
+            }
+            > .pictureBox{
+                background-color: #9ea0a8;
+            }
+            > .name_role {
+                > .role {
+                    
+                }
+                > .name {
+                    -webkit-text-stroke: 2px black;
+                }
+            }
+        }
+        .mem2:hover{
+            background-color: #a6bf02ff;
+            > .card-option{
+                background-color: #ffff26ff;
+            }
+            > .pictureBox{
+                background-color: #9ea0a8;
+            }
+            > .name_role {
+                > .role {
+                    color: #5acc29;
+                }
+                > .name {
+                    color: #fcd7d7;
+                }
+            }
+            .explanation{
+                -webkit-text-stroke: 1px black;
+            }
+        }
+        .mem3:hover{
+            background-color: rgb(66, 126, 255);
+            > .card-option{
+                background-color: rgb(143, 255, 255);
+            }
+            > .pictureBox{
+                background-color: #9ea0a8;
+            }
+            > .name_role {
+                > .role {
+                    color: rgb(165, 149, 240)
+                }
+                > .name {
+
+                }
+            }
+            .explanation{
+                font-size: 26px;
+                -webkit-text-stroke: 1px black;
+            }
+        }
+
+        .mem4:hover{
+            background-color: rgb(165, 149, 240);
+            > .card-option{
+                background-color: rgb(245, 108, 169);
+            }
+            > .pictureBox{
+                background-color: #9ea0a8;
+            }
+            > .name_role {
+                > .role {
+                    
+                }
+                > .name {
+                    
+                }
+            }
         }
 
         .modal {
@@ -225,12 +317,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #fefefe;
-            padding: 20px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            max-height: 1200px;
-
+            width: 600px;
+            height: 600px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -256,7 +345,6 @@
             display: none;
             width: 24px;
             height: 24px;
-            /* background-color: rgb(220, 219, 219); */
             border: 1px solid rgb(145, 145, 145);
             border-radius: 30px;
             z-index: -10;
@@ -269,6 +357,60 @@
             border: 1px solid rgb(145, 145, 145);
             border-radius: 30px;
             background-color: rgb(145, 145, 145);
+        }
+
+        .aa {
+            display: flex;
+            background-color: rgb(75, 75, 245);
+            width: 600px;
+            height: 600px;
+        }
+        .dd {
+            width: 510px;
+            height: 510px;
+            background-color: white;
+            display: block;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: auto;
+        }
+        .so {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        
+        .so2 {
+            font-size: 40pt;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .so3 {
+            font-size: 29pt;
+            text-align: center;
+        }
+        .so4
+        {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .so5 {
+            margin-top: 20px;
+            margin-left: 20px;
+            text-align: left;
+        }
+        .so6 {
+            font-size: 20pt;
+            text-align: center;
+        }
+        .so7 {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -290,14 +432,18 @@
                 <img src='https://cdn.discordapp.com/attachments/1187229449968697348/1187742114105278564/Untitled-1.png?ex=6597fe0b&is=6585890b&hm=8ba7e2f339e39a4b1e9c9f74d13aa532c0a089d12428241187f8df45eaad9afd&'>
             </div>
             <div class="b">
-                <h1 id="WW">『의.식.의.흐.름』대로 저희 팀을 소개합니다.</h1>
+                <h1 id="WW">『의.식.의.흐.름』대로 우리 팀을 소개합니다.</h1>
                 <div class="explanationOuter explanationLine">
                     <div class="explanationInner explanationLine">
                         <ul>
                             <li>같지만 서로 겹치지 않는 "I"들</li>
                             <li>무의식이지만 의외로 체계적인 협업 스타일</li>
-                            <li>설명3</li>
-                            <li>설명4</li>
+                            <li>겹치지않는 개성</li>
+                            <li>경기도에 거주</li>
+                            <li>협조적인 성격</li>
+                            <li>트러블 X</li>
+                            <li>부족한건 빠르게 학습하는 성장력</li>
+                            <li>긍정적이고 유연하게 "흐름 그 자체"의 마인드</li>
                         </ul>
                     </div>
                 </div>
@@ -306,7 +452,7 @@
                 <br>
                 <br>
                 <div class="titleBox">
-                    <div class="titleText">팀원 구성</div>
+                    <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189415484144242698/e11ad5db9d96c9b3.png?ex=659e147d&is=658b9f7d&hm=0b0888c1cefe45cf6996a08370be9108da23d2b88c3e401538a1cdd76f116264&"/>
                 </div>
                 <br>
                 <br>
@@ -315,105 +461,164 @@
                 <div class="teamContainer">
                     <div class="memberContainer">
                         <div class="memberCard mem1">
-                            <div class="pictureBox">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            <div class="pictureBox card-option">
+                                <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189121146327683102/01-6.png?ex=659d025e&is=658a8d5e&hm=c5bd48af1eb1f94c263fd257b8246e954d749340effb8f082ff499d1c26ca489&" class="card-img-top" alt="..." />
                             </div>
-                            <div class="explanation">어제의 나보다 나은 내일이 되자</div>
-                            <div class="name">김민건</div>
+                            <div class="card-option name_role">
+                                <div class="role">조장</div>
+                                <div class="name">김 민 건</div>
+                            </div>
+                            <div class="explanation card-option">어제의 나보다 나은 내일이 되자</div>
                             <div class="memberCard-overlay"></div>
                         </div>
-                        <!-- </div>
-        <div class="memberContainer"> -->
                         <div class="memberCard mem2">
-                            <div class="pictureBox">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            <div class="pictureBox card-option">
+                                <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189121145878880316/01-4.png?ex=659d025d&is=658a8d5d&hm=8aaa22fefeed067e664144d5e12a659c9bf4fec9ff8a8d2fa18d236db737a50d&" class="card-img-top" alt="..." />
                             </div>
-                            <div class="explanation">열심히 하겠슴다</div>
-                            <div class="name">조민근</div>
+                            <div class="card-option name_role">
+                                <div class="role">부조장</div>
+                                <div class="name">조 민 근</div>
+                            </div>
+                            <div class="explanation card-option">열심히 하겠슴다.</div>
                             <div class="memberCard-overlay"></div>
                         </div>
                     </div>
                     <div class="memberContainer">
                         <div class="memberCard mem3">
-                            <div class="pictureBox">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                            <div class="pictureBox card-option">
+                                <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189121145681760316/01-3.png?ex=659d025d&is=658a8d5d&hm=d2625831d62524021cc4cc8026e8f59ac7b66d91d33bc5f77661c7de1f96c5b4&" class="card-img-top" alt="..." />
                             </div>
-                            <div class="explanation">살아남을게요!</div>
-                            <div class="name">송인호</div>
+                            <div class="card-option name_role">
+                                <div class="role">조원</div>
+                                <div class="name">송 인 호</div>
+                            </div>
+                            <div class="explanation card-option">살아남을게요!</div>
                             <div class="memberCard-overlay"></div>
-                        </div>
-                        <!-- </div> -->
-                        <!-- <div class="memberContainer"> -->
-                        <div class="memberCard mem4">
-                            <div class="pictureBox">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
+                        </div><div class="memberCard mem4">
+                            <div class="pictureBox card-option">
+                                <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189121146088603648/01-5.png?ex=659d025e&is=658a8d5e&hm=091dfc272f34f93f4ef2050dd5c0b5cd4c1d0a6c4e67e8572ba15b06e806e24c&" class="card-img-top" alt="..." />
                             </div>
-                            <div class="explanation">많이 배워가고 싶습니다</div>
-                            <div class="name">류기돈</div>
+                            <div class="card-option name_role">
+                                <div class="role">조원</div>
+                                <div class="name">류 기 돈</div>
+                            </div>
+                            <div class="explanation card-option">끝까지 하겠습니다.</div>
                             <div class="memberCard-overlay"></div>
                         </div>
                     </div>
                     <div id="myModal1" class="modal">
                         <div class="modal-content">
-                            <span class="close closeModalBtn">&times;</span>
-                            <div class="picture">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
-                            </div>
-                            <div>
-                                <p>-이름 : 김민건</p>
-                                <p>
-                                    -팀원설명 : 타인의 신경을 많이 쓴다, 긴장을 많이 한다. 팀원 모두의 의견을 받으려 한다
-                                </p>
-                                <p>-팀원소개 및 스타일</p>
-                                <p>-팀원 블로그 : https://blog.naver.com/mnbqwe123987</p>
-                                <p>-팀원 깃허브 주소</p>
+                            <div class="aa">
+                                <div class="dd">
+                                    <div class="so" style="float: left;">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363712889470986/022.gif?ex=659de446&is=658b6f46&hm=d5c9ef83615792459551431285d02634922821402171ce477f0791f0417c28ef&" alt="profile-image">
+                                    </div>
+                                    <div class="so2">김 민 건</div>
+                                    <div class="so3">I N F P</div>
+                                    <div class="so4">"즐거운 마음으로 랄랄랄"</div>
+                                    <br>
+                                    <div class="so5">
+                                        블로그 : https://blog.naver.com/mnbqwe123987<br>
+                                        깃허브 : https://github.com/gimmingeon/sparta
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="so6">타인의 신경을 많이 쓴며, 긴장을 많이 한다.<br>
+                                        팀원 모두의 의견을 받으려 한다
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="so7">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363303705743390/Untitled-1.png?ex=659de3e4&is=658b6ee4&hm=92dd36f557e513cc4c161abdc3da26f5d08126b12ffb2b574b0e3da2a17cd86f&" width="230px" height="35px">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="myModal2" class="modal">
                         <div class="modal-content">
-                            <span class="close closeModalBtn">&times;</span>
-                            <div class="picture">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
-                            </div>
-                            <div>
-                                <p>-이름 : 조민근</p>
-                                <p>-팀원설명 : 축구를 매우 좋아합니다.</p>
-                                <p>-팀원소개 및 스타일</p>
-                                <p>-팀원 블로그 : https://blog.naver.com/mgeun97</p>
-                                <p>-팀원 깃허브 주소 : https://github.com/alsgeun/sparta</p>
+                            <div class="aa">
+                                <div class="dd">
+                                    <div class="so" style="float: left;">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363732166496417/033.gif?ex=659de44b&is=658b6f4b&hm=c6548966723b4a3ed3c81e3043ebb557be89a9caae962de2179678d773f9121b&" alt="profile-image">
+                                    </div>
+                                    <div class="so2">조 민 근</div>
+                                    <div class="so3">I S F J</div>
+                                    <div class="so4">"인간 잇프제고요. 반갑습니다!"</div>
+                                    <br>
+                                    <div class="so5">
+                                        블로그 : https://blog.naver.com/mgeun97<br>
+                                        깃허브 : https://github.com/alsgeun<br>
+                                        취미 : 음악 감상, 축구, 산책, 게임<br>
+                                        T.M.I : 축구를 매우 좋아합니다.
+                                    </div>
+                                    <br>
+                                    <div class="so6">느리지만 끝까지 열심히 하는 편이고,<br>
+                                        나서기 보단 조용히 도와주는 스타일 입니다.
+                                    </div>
+                                    <br>
+                                    <div class="so7">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363303705743390/Untitled-1.png?ex=659de3e4&is=658b6ee4&hm=92dd36f557e513cc4c161abdc3da26f5d08126b12ffb2b574b0e3da2a17cd86f&" width="230px" height="35px">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="myModal3" class="modal">
                         <div class="modal-content">
-                            <span class="close closeModalBtn">&times;</span>
-                            <div class="picture">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
-                            </div>
-                            <div>
-                                <p>-이름 : 송인호</p>
-                                <p>-팀원설명 : 아 옆으로 스크롤하면 새로칸이나온다는것을 지금 알았어요</p>
-                                <p>-팀원소개 및 스타일</p>
-                                <p>-팀원 블로그 : https://night-of-destruction.tistory.com/</p>
-                                <p>-팀원 깃허브 주소 : https://github.com/fhem348/sparta</p>
+                            <div class="aa">
+                                <div class="dd">
+                                    <div class="so" style="float: left;">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363759349776484/044.gif?ex=659de451&is=658b6f51&hm=bd704758c6171c46d177c911f112adb77eedab56412795d314fdde6446ac45eb&" alt="profile-image">
+                                    </div>
+                                    <div class="so2">송 인 호</div>
+                                    <div class="so3">I N T J</div>
+                                    <div class="so4">"비틀비틀 걸어가는 나의다리 오늘도 의미 없는 또 하루가 흘러가죠"</div>
+                                    <br>
+                                    <div class="so5">
+                                        블로그 : https://blog.naver.com/mnbqwe123987<br>
+                                        깃허브 : https://github.com/fhem348/sparta <br>
+                                        특기 : 피니투라 페투치아★                                    </div>
+                                    <br>
+                                    <div class="so6">나서는것을 싫어하지만 의견을 잘내는편<br>
+                                        쓸대없는것에 집착이 심하다. 존재자체가 모순
+                                    </div>
+                                    <br>
+                                    <div class="so7">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363303705743390/Untitled-1.png?ex=659de3e4&is=658b6ee4&hm=92dd36f557e513cc4c161abdc3da26f5d08126b12ffb2b574b0e3da2a17cd86f&" width="230px" height="35px">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="myModal4" class="modal">
                         <div class="modal-content">
-                            <span class="close closeModalBtn">&times;</span>
-                            <div class="picture">
-                                <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="..." />
-                            </div>
-                            <div>
-                                <p>-이름 : 류기돈</p>
-                                <p>
-                                    -팀원설명 : 경기도 살고 있습니다. 음악 듣기 좋아합니다. 스케이트 보드 배우고 있습니다.
-                                </p>
-                                <p>-팀원소개 및 스타일</p>
-                                <p>-팀원 블로그 : https://blog.naver.com/lyukidon</p>
-                                <p>-팀원 깃허브 주소 : https://github.com/lyukid0n/sparta</p>
+                            <div class="aa">
+                                <div class="dd">
+                                    <div class="so" style="float: left;">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363693545324544/011.gif?ex=659de441&is=658b6f41&hm=b2840654b9791f53bec08d84487b8b4ca369cfad1adc58d4bfb2b353715bfad6&" alt="profile-image">
+                                    </div>
+                                    <div class="so2">류 기 돈</div>
+                                    <div class="so3">I N T P</div>
+                                    <div class="so4">"많이 배우고 가고 싶습니다."</div>
+                                    <br>
+                                    <div class="so5">
+                                        블로그 : <a href="http://blog.naver.com/lyukidon">https://blog.naver.com/lyukidon</a><br>
+                                        깃허브 : <a href="http://github.com/lyukid0n">http://github.com/lyukid0n</a><br>
+                                        취미 : 음악 감상, 유튜브 시청, 운동, 스케이트 보드<br>
+                                        특기 : 벼락치기
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <div class="so6">
+                                        목표가 있으면 열심히 하려고 합니다.<br>
+                                        끝까지 해보도록 노력하겠습니다.
+                                    </div>
+                                    <br>
+                                    <div class="so7">
+                                        <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189363303705743390/Untitled-1.png?ex=659de3e4&is=658b6ee4&hm=92dd36f557e513cc4c161abdc3da26f5d08126b12ffb2b574b0e3da2a17cd86f&" width="230px" height="35px">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -422,8 +627,13 @@
 
         </div>
         <script>
+            $(".mem3").on('mouseover', () => {
+                document.querySelector(".mem3 > .explanation").innerText = "살려주세요!"
+            })
+            $(".mem3").on('mouseout', () => {
+                document.querySelector(".mem3 > .explanation").innerText = "살아남을게요!"
+            })
             $("#toggleButton").click(function(event) {
-                console.log('click')
                 const location = document.querySelector('#toggleButton').offsetTop;
                 const destination = document.querySelector("#gg").offsetTop;
                 window.scrollTo({
@@ -492,9 +702,9 @@
                 card.addEventListener("mousemove", (evt) => {
                     let x = evt.offsetX;
                     let y = evt.offsetY;
-                    let rotateY = (-1 / 12) * x + 10;
-                    let rotateX = (1 / 18) * y - 10;
-                    card.style = `transform : perspective(320px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                    let rotateY = (-1 / 23) * x + 10;
+                    let rotateX = (2 / 25) * y - 10;
+                    card.style = `transform : perspective(400px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
                 });
                 card.addEventListener("mouseout", (evt) => {
                     card.style = `transform : rotateY(0deg) rotateX(0deg)`;
