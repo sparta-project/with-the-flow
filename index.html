@@ -411,6 +411,25 @@
             padding: 10px 20px;
             background-color: #dfdfdf;
         }
+        .deleteBtn {
+            margin: 5px;
+            border-radius: 3px;
+            background-color: transparent;
+            border: 2px solid black;
+            color: red;
+        }
+
+
+        .review-content{
+            display: flex;
+            flex-direction: row;
+            padding: 10px 20px;
+            background-color: transparent;
+        }
+
+        .reviewInput {
+            margin: 2px;
+        }
 
         .explanationLine{
             --b: 5px;
@@ -831,7 +850,7 @@
                     ${reviewContents}
                     <div class="review-content">
                         <div>${content}</div>
-                        <button name=${key} class="deleteBtn">삭제</button>
+                        <button name=${key} class="deleteBtn">X</button>
                     </div>`;
                 input.value = ""
 
