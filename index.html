@@ -31,24 +31,12 @@
 
         #toggleButton {
             background-color: transparent;
-            color: #7485F7;
+            color: black;
             font-size: 60px;
             font-weight: 800;
             border: none;
             outline: none;
             background-color: rgba(255, 255, 255, 0);
-        }
-
-        .toggleShadow {
-            position: absolute;
-            margin-top: 20px;
-            width: 100px;
-            height: 0px;
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 50%;
-            box-shadow: 15px -35px 20px 15px gray;
-            border: 1px solid rgba(149, 149, 149, 0);
-            z-index: -10;
         }
 
         #gg {
@@ -423,6 +411,62 @@
             padding: 10px 20px;
             background-color: #dfdfdf;
         }
+
+        .explanationLine{
+            --b: 5px;
+            /* thickness of the border */
+            --c: #390cb8;
+            /* color of the border */
+            --w: 33px;
+            /* width of border */
+
+            border: var(--b) solid #0000;
+            /* space for the border */
+            --_g: #0000 90deg, var(--c) 0;
+            --_p: var(--w) var(--w) border-box no-repeat;
+            background:
+                conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 / var(--_p),
+                conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) 100% 0 / var(--_p),
+                conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--_g)) 0 100% / var(--_p),
+                conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
+        }
+
+        .rulebox {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding-bottom: 20px;
+            border-radius: 10px;
+            border: 5px solid #390cb8;
+            padding: 15px;
+
+        }
+
+        .rulebox .explanationLine {
+            --b: 5px;
+            /* thickness of the border */
+            --c: #390cb8;
+            /* color of the border */
+            --w: 33px;
+            /* width of border */
+
+            border: var(--b) solid #0000;
+            /* space for the border */
+            --_g: #0000 90deg, var(--c) 0;
+            --_p: var(--w) var(--w) border-box no-repeat;
+            background:
+                conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 / var(--_p),
+                conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) 100% 0 / var(--_p),
+                conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--_g)) 0 100% / var(--_p),
+                conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
+
+
+        }
+
+        .rulebox .explanationLine li {
+            color: white;
+        }
+        .rulebox .explanationLine li .warning {
+            color: orange;
+        }
     </style>
 </head>
 
@@ -432,10 +476,8 @@
     </div>
     <div class="main">
         <div class="start-container">
-            <div>Project</div>
             <div id="toggleButton">
                 WTF
-                <div class="toggleShadow"></div>
             </div>
         </div>
         <div id="gg">
@@ -462,6 +504,22 @@
                 <br>
                 <br>
                 <br>
+
+                <div class="rulebox">
+                    <h1 id="WW">팀 규칙</h1>
+                    <div class="explanationOuter explanationLine">
+                        <div class="explanationInner explanationLine">
+                            <ul>
+                                <li>팀원과의 원할한 <span class="warning">커뮤니케이션</span>을 하자</li>
+                                <li>예의중시하자, <span class="warning">존댓말</span>과 <span class="warning">존칭</span>은 필수</li>
+                                <li><span class="warning">시간</span>을 엄수하자</li>
+                                <li><span class="warning">최선</span>을 다하자</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="titleBox">
                     <img src="https://cdn.discordapp.com/attachments/1187229449968697348/1189415484144242698/e11ad5db9d96c9b3.png?ex=659e147d&is=658b9f7d&hm=0b0888c1cefe45cf6996a08370be9108da23d2b88c3e401538a1cdd76f116264&"/>
                 </div>
